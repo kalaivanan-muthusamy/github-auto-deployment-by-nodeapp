@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const express = require("express");
 const bodyParser = require("body-parser");
 const util = require("util");
@@ -36,6 +37,26 @@ app.listen(Configs.PORT_TO_RUN_THE_APP, () =>
 );
 
 function gitHubValidation(req, res, next) {
-  console.log(req.headers);
-  next();
+  try {
+    const payload = JSON.stringify(req.body);
+    const sig = req.get("X-Hub-Signature") || "";
+    const hmac = crypto.createHmac("sha1", Configs.SECRET_KEY);
+    const digest = Buffer.from(
+      "sha1=" + hmac.update(payload).digest("hex"),
+      "utf8"
+    );
+    const checksum = Buffer.from(sig, "utf8");
+    if (
+      checksum.length !== digest.length ||
+      !crypto.timingSafeEqual(digest, checksum)
+    ) {
+      res.status(400).json({
+        message: "Invalid Request. Couldn't verify the ownership",
+      });
+    } else {
+      next();
+    }
+  } catch (err) {
+    res.status(400).json({ message: "Couldn't validate the request" });
+  }
 }
