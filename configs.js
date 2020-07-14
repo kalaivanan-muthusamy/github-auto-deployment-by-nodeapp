@@ -4,10 +4,10 @@ const TRIGGER_CONFIGURATIONS = "ALL";
 const APPLICATION_PATH_ON_SERVER = "/home/ubuntu/bringmeals/api";
 const SHELL_FILE_PATH_EXECUTE = "api_deployment.sh";
 const PORT_TO_RUN_THE_APP = "9001";
-const ENDPOINT_FOR_WEBHOOK = "hooks";
-const UNIQUE_RANDOM_STRING = "GyzdX4fVRZgSe6VsGfiD";
+const ENDPOINT_FOR_WEBHOOK = "hooks/github";
+const SECRET_KEY = "GyzdX4fVRZgSe6VsGfiD";
 const GITHUB_CONTENT_TYPE = "application/json";
-const POST_URL = `/${ENDPOINT_FOR_WEBHOOK}/${UNIQUE_RANDOM_STRING}`;
+const POST_URL = `/${ENDPOINT_FOR_WEBHOOK}`;
 
 module.exports = {
   GITHUB_REPOSITORY_FULL_NAME,
@@ -17,7 +17,7 @@ module.exports = {
   SHELL_FILE_PATH_EXECUTE,
   PORT_TO_RUN_THE_APP,
   ENDPOINT_FOR_WEBHOOK,
-  UNIQUE_RANDOM_STRING,
+  SECRET_KEY,
   GITHUB_CONTENT_TYPE,
   POST_URL,
 };
