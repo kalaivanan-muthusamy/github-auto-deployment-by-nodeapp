@@ -72,7 +72,7 @@ function gitHubValidation(req, res, next) {
 function getApplicationConfig(payload) {
   const repositoryName = payload.repository.full_name;
   const applicationConfig = Configs.APPLICATIONS.find(
-    (application) => application.full_name === repositoryName
+    (application) => application.GITHUB_REPOSITORY_FULL_NAME === repositoryName
   );
   return applicationConfig;
 }
