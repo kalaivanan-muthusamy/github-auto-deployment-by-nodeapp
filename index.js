@@ -12,11 +12,18 @@ app.use(gitHubValidation);
 app.post(Configs.POST_URL, async (req, res) => {
   try {
     const payload = JSON.parse(req.body.payload);
-    if (
-      payload.ref === Configs.BRANCHES_TO_DEPLOY &&
-      payload.repository.full_name === Configs.GITHUB_REPOSITORY_FULL_NAME
-    ) {
-      const { error } = await exec(`sh ${Configs.SHELL_FILE_PATH_EXECUTE}`);
+
+    const applicationConfig = getApplicationConfig(payload);
+    if (!applicationConfig) {
+      return res.status(400).json({
+        message: "Not deployment configuration found for the repository",
+      });
+    }
+
+    if (applicationConfig.BRANCHES_TO_DEPLOY.includes(payload.ref)) {
+      const { error } = await exec(
+        `sh ${applicationConfig.SHELL_FILE_PATH_EXECUTE}`
+      );
       if (error)
         res.status(500).json({
           message: "Deployment failed. Check the server log for more info",
@@ -36,6 +43,10 @@ app.listen(Configs.PORT_TO_RUN_THE_APP, () =>
   console.log(`Deployment app listening at ${Configs.PORT_TO_RUN_THE_APP}`)
 );
 
+/**
+ * An Express middleware to validate if the incoming request is secure and authorized
+ *
+ */
 function gitHubValidation(req, res, next) {
   try {
     const payload = JSON.stringify(req.body);
@@ -56,4 +67,12 @@ function gitHubValidation(req, res, next) {
   } catch (err) {
     res.status(400).json({ message: "Couldn't validate the request" });
   }
+}
+
+function getApplicationConfig(payload) {
+  const repositoryName = payload.repository.full_name;
+  const applicationConfig = Configs.APPLICATIONS.find(
+    (application) => application.full_name === repositoryName
+  );
+  return applicationConfig;
 }
