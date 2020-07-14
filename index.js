@@ -1,9 +1,11 @@
 const express = require("express");
-const app = express();
+const bodyParser = require('body-parser')
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 const Configs = require("./configs");
+const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(gitHubValidation);
 
 app.post(Configs.POST_URL, (req, res) => {
