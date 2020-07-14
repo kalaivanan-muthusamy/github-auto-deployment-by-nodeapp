@@ -1,0 +1,23 @@
+{
+  "name": "github-auto-deployment-by-hooks",
+  "version": "1.0.0",
+  "description": "GitHub Auto Deployment Using WebHooks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalaivanan-muthusamy/bringmeals-deployment.git"
+  },
+  "keywords": [],
+  "author": "Kalaivanan Muthusamy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalaivanan-muthusamy/bringmeals-deployment/issues"
+  },
+  "homepage": "https://github.com/kalaivanan-muthusamy/bringmeals-deployment#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
