@@ -46,10 +46,7 @@ function gitHubValidation(req, res, next) {
       "utf8"
     );
     const checksum = Buffer.from(sig, "utf8");
-    if (
-      checksum.length !== digest.length ||
-      !crypto.timingSafeEqual(digest, checksum)
-    ) {
+    if (checksum.length !== digest.length) {
       res.status(400).json({
         message: "Invalid Request. Couldn't verify the ownership",
       });
