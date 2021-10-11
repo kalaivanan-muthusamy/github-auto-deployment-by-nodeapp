@@ -21,6 +21,7 @@ app.post(Configs.POST_URL, async (req, res) => {
     }
 
     if (applicationConfig.BRANCHES_TO_DEPLOY.includes(payload.ref)) {
+      console.log(`Deploying ${applicationConfig?.APPLICATION_NAME}`)
       const { error } = await exec(
         `sh ${applicationConfig.SHELL_FILE_PATH_EXECUTE}`
       );
@@ -28,6 +29,7 @@ app.post(Configs.POST_URL, async (req, res) => {
         res.status(500).json({
           message: "Deployment failed. Check the server log for more info",
         });
+      console.log(`Deploying completed for ${applicationConfig?.APPLICATION_NAME}`)
       res.json({ message: "Deployed" });
     } else {
       res.status(400).json({ message: "Deployment criteria not met" });
