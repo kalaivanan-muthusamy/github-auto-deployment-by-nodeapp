@@ -4,13 +4,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
-const Configs = require("./configs");
+const Configs = require("./deployment-config");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(gitHubValidation);
 
-app.post(Configs.POST_URL, async (req, res) => {
+app.post(Configs.ENDPOINT_FOR_WEBHOOK, async (req, res) => {
   try {
     const payload = JSON.parse(req.body.payload);
 
