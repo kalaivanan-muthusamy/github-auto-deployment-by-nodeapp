@@ -13,6 +13,8 @@ const ENDPOINT_FOR_WEBHOOK = "hooks/github";
 const SECRET_KEY = process.env.SECRET;
 const POST_URL = `/${ENDPOINT_FOR_WEBHOOK}`;
 
+console.log(SECRET_KEY);
+
 module.exports = {
   APPLICATIONS,
   PORT_TO_RUN_THE_APP,
